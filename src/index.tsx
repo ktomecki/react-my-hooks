@@ -189,3 +189,42 @@ export function useFlip(optionsRef : React.MutableRefObject<HTMLElement>, show :
     }
   }, [optionsRef.current, auto, show, current])
 }
+
+export function useAnimationFrames(array : any[], time : number, initialValue : any) {
+  const [value, setValue] = React.useState(initialValue)
+  const timeout = React.useRef<NodeJS.Timeout | null>()
+  function f(i : number) {
+    setTimeout(() => {
+      setValue(array[i])
+      if (i < array.length - 1)
+        f(i + 1)
+      else
+        timeout.current = null
+    }, time)
+  }
+  const start = React.useCallback(() => {
+    if (timeout.current == null)
+      f(0)
+  }, [])
+  return [value, start]
+}
+
+export function useTransition(destination : number, duration : number) {
+  const [value, setValue] = React.useState(destination)
+  const timeout = React.useRef<NodeJS.Timeout>()
+  const tick = 25
+
+  function f(time : number) {
+    timeout.current = setTimeout(() => {
+      setValue(v => v + (time/duration * (destination-v)))
+      if(time < duration)
+        f(time+tick)
+    }, tick)
+  }
+
+  React.useEffect(() => {
+    clearTimeout(timeout.current as NodeJS.Timeout)
+    f(0)
+  }, [destination])
+  return value
+}
