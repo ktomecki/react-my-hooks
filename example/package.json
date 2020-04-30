@@ -5,10 +5,12 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "react": "file:../node_modules/react",
+    "react-bootstrap": "^1.0.1",
     "react-dom": "^16.9.0",
-    "react-scripts": "^3.0.1",
-    "react-my-hooks": "file:.."
+    "react-my-hooks": "file:..",
+    "react-scripts": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

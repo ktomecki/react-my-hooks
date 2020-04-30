@@ -2,28 +2,6 @@ import * as React from 'react';
 
 const df = () => { };
 
-export const useMyHook = () => {
-  let [{
-    counter
-  }, setState] = React.useState<{
-    counter: number;
-  }>({
-    counter: 0
-  });
-
-  React.useEffect(() => {
-    let interval = setInterval(() => {
-      counter++;
-      setState({ counter })
-    }, 1000)
-    return () => {
-      window.clearInterval(interval);
-    };
-  }, []);
-
-  return counter;
-};
-
 export function useWatchedRef(callback: (node: HTMLElement) => any) : [React.MutableRefObject<HTMLElement | undefined>, ((node: HTMLElement) => void)] {
   const ref = React.useRef<HTMLElement>()
   const setRef = React.useCallback((node : HTMLElement) => {ref.current = node; callback(node);}, []);
